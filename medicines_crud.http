@@ -1,0 +1,60 @@
+### Create medicine (expect 201)
+POST http://localhost/api/medicines
+Content-Type: application/json
+
+{
+  "name": "Paracetamol (test)",
+  "manufacturer": "Acme Pharmaceuticals",
+  "expiration_date": "2026-12-31",
+  "price": 9.99
+}
+
+### List medicines (expect 200)
+GET http://localhost/api/medicines
+Accept: application/json
+
+
+### Show single medicine (replace {{ID}} with created id) (expect 200)
+GET http://localhost/api/medicines/1
+Accept: application/json
+
+
+### Update medicine (expect 200)
+PUT http://localhost/api/medicines/1
+Content-Type: application/json
+
+{
+  "name": "Paracetamol (test updated)",
+  "manufacturer": "Acme Pharmaceuticals Ltd",
+  "expiration_date": "2027-06-30",
+  "price": 12.50
+}
+
+### Invalid create (missing required fields) (expect 422)
+POST http://localhost/api/medicines
+Content-Type: application/json
+
+{
+  "manufacturer": "NoName",
+  "price": -5
+}
+
+### Invalid update (bad price) (expect 422)
+PUT http://localhost/api/medicines/1
+Content-Type: application/json
+
+{
+  "name": "Bad price",
+  "manufacturer": "Acme",
+  "expiration_date": "2024-01-01",
+  "price": -100
+}
+
+### Delete medicine (expect 204)
+DELETE http://localhost/api/medicines/1
+Accept: application/json
+
+
+### Show after delete (expect 404)
+GET http://localhost/api/medicines/1
+Accept: application/json
